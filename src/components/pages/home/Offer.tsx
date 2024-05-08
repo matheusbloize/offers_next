@@ -16,17 +16,17 @@ interface OfferProps {
 
 const Offer = ({ title, description, price, image }: OfferProps) => {
   return (
-    <article className="flex flex-col w-full h-full sm:w-72">
+    <article className="flex flex-col w-full h-full">
       <Image
-        className={`w-full h-72 ${image ? `sm:w-${image.width} sm:h-${image.height}` : "sm:w-72 sm:h-48"} object-cover`}
+        className={`w-full h-72 ${image ? `sm:w-${image.width} sm:h-${image.height}` : "sm:h-48"} object-cover`}
         src={image ? image.url : default_image}
         alt={image ? image.alt : "Imagem padrão."}
         width={image ? image.width : 288}
         height={image ? image.height : 192}
       />
       <section>
-        <h3 className="font-bold">{title}</h3>
-        <p className="text-sm">{description}</p>
+        <h3 className="font-bold ellipsis">{title}</h3>
+        <p className="text-sm min-h-10 ellipsis">{description}</p>
         <span className="font-bold">
           R$ {price.toFixed(2).replace(".", ",")}
         </span>

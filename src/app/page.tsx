@@ -1,7 +1,11 @@
+import Category from "@/components/pages/home/Category";
+
 const Home = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello World</h1>
+    <main className="flex flex-col p-4 gap-12">
+      <Category title="hoteis" />
+      <Category title="entretenimento" />
+      <Category title="gastronomia" />
     </main>
   );
 };

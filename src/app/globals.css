@@ -14,3 +14,17 @@ body,
 #root {
   height: 100%;
 }
+
+.ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+h3.ellipsis {
+  -webkit-line-clamp: 1;
+}
+
+p.ellipsis {
+  -webkit-line-clamp: 2;
+}
