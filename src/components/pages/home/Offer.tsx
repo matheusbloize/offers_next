@@ -25,7 +25,7 @@ const Offer = ({ title, description, price, image }: OfferProps) => {
         height={image ? image.height : 192}
       />
       <section>
-        <h2 className="font-bold">{title}</h2>
+        <h3 className="font-bold">{title}</h3>
         <p className="text-sm">{description}</p>
         <span className="font-bold">
           R$ {price.toFixed(2).replace(".", ",")}

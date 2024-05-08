@@ -1,19 +1,18 @@
-import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
-export const GET = async () => {
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  });
+import { connectionToDB } from "@/utils/database";
 
+export const GET = async () => {
   try {
+    const connection = await connectionToDB();
+    if (!connection) {
+      return new NextResponse("Failed to connect to database", { status: 500 });
+    }
+
     const [results] = await connection.query("SELECT * FROM project.offers");
 
     return new NextResponse(JSON.stringify(results), { status: 200 });
   } catch (error) {
-    return new NextResponse("vish", { status: 500 });
+    return new NextResponse("Failed to fetch all offers", { status: 500 });
   }
 };
