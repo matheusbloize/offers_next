@@ -1,3 +1,4 @@
+import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
 import { connectionToDB } from "@/utils/database";
@@ -10,7 +11,7 @@ export const POST = async (req: Request) => {
   }
 
   try {
-    const connection = await connectionToDB();
+    const connection = (await connectionToDB()) as mysql.Connection;
     if (!connection) {
       return new NextResponse("Failed to connect to database", { status: 500 });
     }
