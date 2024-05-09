@@ -3,8 +3,10 @@
 import { useQuery } from "@tanstack/react-query";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Carousel from "react-multi-carousel";
 
 import loader from "@/assets/svg/loader.svg";
+import "react-multi-carousel/lib/styles.css";
 
 const DynamicOffer = dynamic(() => import("./Offer"), {
   loading: () => (
@@ -28,6 +30,34 @@ const DynamicOffer = dynamic(() => import("./Offer"), {
   ),
 });
 
+const responsive = {
+  "2xl": {
+    breakpoint: { max: 3000, min: 2000 },
+    items: 6,
+    partialVisibilityGutter: -10,
+  },
+  xl: {
+    breakpoint: { max: 1999, min: 1280 },
+    items: 4,
+    partialVisibilityGutter: -10,
+  },
+  lg: {
+    breakpoint: { max: 1279, min: 1024 },
+    items: 3,
+    partialVisibilityGutter: -10,
+  },
+  sm: {
+    breakpoint: { max: 1023, min: 640 },
+    items: 2,
+    partialVisibilityGutter: -10,
+  },
+  base: {
+    breakpoint: { max: 639, min: 0 },
+    items: 1,
+    partialVisibilityGutter: -10,
+  },
+};
+
 interface CategoryProps {
   title: string;
 }
@@ -47,31 +77,32 @@ export const Category = ({ title }: CategoryProps) => {
   return (
     <section className="flex flex-col gap-8">
       <h2 className="text-2xl font-bold capitalize">{title}</h2>
-      <section className="flex flex-col gap-8 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
-        {data &&
-          data.map((offer) => (
-            <DynamicOffer
-              key={offer.offer_id}
-              title={offer.title}
-              description={offer.description}
-              price={
-                offer.discounted_price !== "0"
-                  ? Number(offer.discounted_price)
-                  : Number(offer.price)
-              }
-            />
-          ))}
-        {isLoading && (
-          <>
-            <div className="w-full h-screen bg-gray-100 animate-pulse sm:h-80"></div>
-            <div className="w-full h-screen bg-gray-100 animate-pulse sm:h-80"></div>
-            <div className="w-full h-screen bg-gray-100 animate-pulse sm:h-80"></div>
-            <div className="w-full h-screen bg-gray-100 animate-pulse sm:h-80"></div>
-            <div className="w-full h-screen bg-gray-100 animate-pulse sm:h-80 max-2xl:hidden"></div>
-            <div className="w-full h-screen bg-gray-100 animate-pulse sm:h-80 max-2xl:hidden"></div>
-          </>
-        )}
-      </section>
+      {data && (
+        <Carousel
+          swipeable={true}
+          responsive={responsive}
+          infinite={true}
+          itemClass="carouselItem"
+          partialVisible
+        >
+          {data &&
+            data.map((offer) => (
+              <DynamicOffer
+                key={offer.offer_id}
+                title={offer.title}
+                description={offer.description}
+                price={
+                  offer.discounted_price !== "0"
+                    ? Number(offer.discounted_price)
+                    : Number(offer.price)
+                }
+              />
+            ))}
+        </Carousel>
+      )}
+      {isLoading && (
+        <div className="w-full flex bg-gray-300 animate-pulse h-[416px] sm:h-80"></div>
+      )}
     </section>
   );
 };
