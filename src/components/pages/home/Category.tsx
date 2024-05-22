@@ -89,6 +89,7 @@ export const Category = ({ title }: CategoryProps) => {
             data.map((offer) => (
               <DynamicOffer
                 key={offer.offer_id}
+                id={offer.offer_id}
                 title={offer.title}
                 description={offer.description}
                 price={
