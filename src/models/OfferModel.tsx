@@ -5,4 +5,10 @@ export interface Offer {
   price: string;
   discounted_price: string;
   category: string;
+  image?: {
+    url: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
 }

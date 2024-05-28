@@ -97,6 +97,7 @@ export const Category = ({ title }: CategoryProps) => {
                     ? Number(offer.discounted_price)
                     : Number(offer.price)
                 }
+                image={offer.image}
               />
             ))}
         </Carousel>

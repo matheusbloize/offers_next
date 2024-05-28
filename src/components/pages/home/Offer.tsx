@@ -21,7 +21,8 @@ const Offer = ({ id, title, description, price, image }: OfferProps) => {
     <Link href={`/oferta/${id}`}>
       <article className="flex flex-col w-full h-full">
         <Image
-          className={`w-full h-72 ${image ? `sm:w-${image.width} sm:h-${image.height}` : "sm:h-48"} object-cover`}
+          className={`w-full h-72 sm:h-48 object-cover`}
+          // className={`w-full h-72 ${image ? `sm:w-[${image.width}] sm:h-[${image.height}]` : "sm:h-48"} object-cover`}
           src={image ? image.url : default_image}
           alt={image ? image.alt : "Imagem padrão."}
           width={image ? image.width : 288}

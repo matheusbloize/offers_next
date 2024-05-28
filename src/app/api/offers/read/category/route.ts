@@ -1,6 +1,8 @@
 import mysql from "mysql2/promise";
 import { NextResponse } from "next/server";
 
+import { Image } from "@/models/ImageModel";
+import { Offer } from "@/models/OfferModel";
 import { connectionToDB } from "@/utils/database";
 
 export const POST = async (req: Request) => {
@@ -19,6 +21,21 @@ export const POST = async (req: Request) => {
     const [results] = await connection.query(
       `SELECT * FROM project.offers WHERE category = '${category}'`,
     );
+
+    const [images] = await connection.query(`SELECT * FROM project.images`);
+
+    (results as Array<Offer>).map((result) => {
+      (images as Array<Image>).map((img) => {
+        if (img.offer_id === result.offer_id) {
+          result.image = {
+            url: img.image_link,
+            alt: "Image Alt Text.",
+            width: 288,
+            height: 192,
+          };
+        }
+      });
+    });
 
     return new NextResponse(JSON.stringify(results), { status: 200 });
   } catch (error) {
