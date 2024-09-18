@@ -30,7 +30,7 @@ const Offer = ({ id, title, description, price, image }: OfferProps) => {
         />
         <section>
           <h3 className="font-bold ellipsis">{title}</h3>
-          <p className="text-sm min-h-10 ellipsis">{description}</p>
+          <p className="text-sm min-h-10 max-w-[90%] ellipsis">{description}</p>
           <span className="font-bold">
             R$ {price.toFixed(2).replace(".", ",")}
           </span>

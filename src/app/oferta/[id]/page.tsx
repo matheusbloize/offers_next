@@ -1,9 +1,11 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 
+import loader from "@/assets/svg/loader.svg";
 import Highlight from "@/components/pages/offer/Highlight";
 
 const OfferPage = () => {
@@ -20,24 +22,64 @@ const OfferPage = () => {
   });
   const [mainImage, setMainImage] = useState<string>("1");
 
+  if (data) {
+    // console.log(data);
+    console.log(mainImage);
+  }
+
   return (
     <main className="flex flex-col p-4 gap-12 max-w-7xl mx-auto">
       <section className="flex justify-between flex-col lg:flex-row">
         <section className="flex flex-col gap-4 w-full max-w-2xl mx-auto lg:max-w-3xl lg:m-0">
-          <div className="w-full h-[420px] object-cover bg-blue-400">
-            {mainImage}
-          </div>
-          <section className="hidden w-full justify-between lg:flex">
-            {[1, 2, 3, 4].map((image) => (
-              <div
-                key={image}
-                onClick={() => setMainImage(image.toString())}
-                className="w-40 h-24 bg-green-400"
-              >
-                {image}
+          {data && data.image && (
+            <>
+              <div className="w-full h-[420px] object-cover">
+                <Image
+                  className="w-full h-[420px] object-cover"
+                  src={data.image.url}
+                  alt={data.image.alt}
+                  width={768}
+                  height={420}
+                  priority
+                />
               </div>
-            ))}
-          </section>
+              <section className="hidden w-full justify-between lg:flex">
+                {[1, 2, 3, 4].map((image) => (
+                  <div
+                    key={image}
+                    onClick={() => setMainImage(image.toString())}
+                    className="w-40 h-24 bg-green-400"
+                  >
+                    {image}
+                  </div>
+                ))}
+              </section>
+            </>
+          )}
+          {isLoading && (
+            <>
+              <div className="w-full h-[420px] object-cover">
+                <Image
+                  className={`w-full h-[420px] object-cover bg-gray-300`}
+                  src={loader}
+                  alt={"Carregamento."}
+                  width={768}
+                  height={420}
+                />
+              </div>
+              <section className="hidden w-full justify-between lg:flex">
+                {[1, 2, 3, 4].map((image) => (
+                  <div
+                    key={image}
+                    onClick={() => setMainImage(image.toString())}
+                    className="w-40 h-24 bg-green-400"
+                  >
+                    {image}
+                  </div>
+                ))}
+              </section>
+            </>
+          )}
         </section>
         <section className="flex flex-col items-center w-full gap-4 mt-8 lg:w-1/4">
           {data && (
